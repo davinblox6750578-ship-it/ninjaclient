@@ -13,6 +13,19 @@ jobs:
       - name: Extrair zip
         run: unzip ninjaclient.zip -d projeto
 
+      - name: Corrigir settings.gradle
+        run: |
+          cat > projeto/ninjaclient/settings.gradle <<'EOF'
+          pluginManagement {
+              repositories {
+                  maven { url = 'https://maven.fabricmc.net/' }
+                  gradlePluginPortal()
+                  mavenCentral()
+              }
+          }
+          rootProject.name = 'ninjaclient'
+          EOF
+
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
