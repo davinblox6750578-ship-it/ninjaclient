@@ -26,6 +26,15 @@ jobs:
           rootProject.name = 'ninjaclient'
           EOF
 
+      - name: Corrigir nomes da versao 1.21.11
+        run: |
+          cd projeto/ninjaclient/src/main/java
+          grep -rl "getPos()" . | xargs sed -i \
+            -e 's/cam\.getPos()/cam.getCameraPos()/g' \
+            -e 's/golem\.getPos()/golem.getEntityPos()/g' \
+            -e 's/mc\.player\.getPos()/mc.player.getEntityPos()/g' \
+            -e 's/target\.getPos()/target.getEntityPos()/g'
+
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
